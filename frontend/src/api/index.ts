@@ -82,6 +82,7 @@ export const clearCsrfToken = (): void => {
 export interface AuthStatusResponse {
   authEnabled?: boolean;
   enabled?: boolean;
+  registrationEnabled?: boolean;
   authMode?: "local" | "hybrid" | "oidc_enforced";
   oidcEnabled?: boolean;
   oidcEnforced?: boolean;

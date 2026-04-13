@@ -19,6 +19,7 @@ export const Login: React.FC = () => {
     login,
     logout,
     authEnabled,
+    registrationEnabled,
     authStatusError,
     retryAuthStatus,
     oidcEnabled,
@@ -159,7 +160,7 @@ export const Login: React.FC = () => {
                 ? `Sign in with ${oidcProvider || 'OIDC'}`
                 : 'Sign in to your account'}
           </h2>
-          {!mustReset && !oidcEnforced ? (
+          {!mustReset && !oidcEnforced && registrationEnabled ? (
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               Or{' '}
               <Link
@@ -168,6 +169,10 @@ export const Login: React.FC = () => {
               >
                 create a new account
               </Link>
+            </p>
+          ) : !mustReset && !oidcEnforced ? (
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              Sign in with an existing account.
             </p>
           ) : mustReset ? (
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">

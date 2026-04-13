@@ -19,6 +19,7 @@ export const Register: React.FC = () => {
   const {
     register,
     authEnabled,
+    registrationEnabled,
     authStatusError,
     retryAuthStatus,
     oidcEnabled,
@@ -72,10 +73,24 @@ export const Register: React.FC = () => {
       navigate('/', { replace: true });
       return;
     }
+    if (!bootstrapRequired && !registrationEnabled) {
+      navigate('/login', { replace: true });
+      return;
+    }
     if (isAuthenticated) {
       navigate('/', { replace: true });
     }
-  }, [authEnabled, authLoading, authOnboardingRequired, authStatusError, isAuthenticated, navigate, oidcEnforced]);
+  }, [
+    authEnabled,
+    authLoading,
+    authOnboardingRequired,
+    authStatusError,
+    bootstrapRequired,
+    isAuthenticated,
+    navigate,
+    oidcEnforced,
+    registrationEnabled,
+  ]);
 
   if (authStatusError) {
     return <AuthStatusErrorPanel message={authStatusError} onRetry={retryAuthStatus} fullScreen />;

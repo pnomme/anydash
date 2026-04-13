@@ -24,6 +24,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   authEnabled: boolean | null;
+  registrationEnabled: boolean;
   authStatusError: string | null;
   authMode: 'local' | 'hybrid' | 'oidc_enforced';
   oidcEnabled: boolean;
@@ -48,6 +49,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [authEnabled, setAuthEnabled] = useState<boolean | null>(null);
+  const [registrationEnabled, setRegistrationEnabled] = useState(false);
   const [authStatusError, setAuthStatusError] = useState<string | null>(null);
   const [authMode, setAuthMode] = useState<'local' | 'hybrid' | 'oidc_enforced'>('local');
   const [oidcEnabled, setOidcEnabled] = useState(false);
@@ -74,6 +76,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
               : true;
         setAuthEnabled(enabled);
         localStorage.setItem(AUTH_ENABLED_CACHE_KEY, String(enabled));
+        setRegistrationEnabled(Boolean(statusResponse?.registrationEnabled));
         const nextAuthMode =
           statusResponse?.authMode === 'hybrid' || statusResponse?.authMode === 'oidc_enforced'
             ? statusResponse.authMode
@@ -100,6 +103,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         if (cachedAuthEnabled === "false") {
           setAuthStatusError(null);
           setAuthEnabled(false);
+          setRegistrationEnabled(false);
           setAuthMode('local');
           setOidcEnabled(false);
           setOidcEnforced(false);
@@ -115,6 +119,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           "Unable to reach the backend API. Check BACKEND_URL, FRONTEND_URL, and your reverse proxy configuration."
         );
         setAuthEnabled(null);
+        setRegistrationEnabled(false);
         setAuthMode('local');
         setOidcEnabled(false);
         setOidcEnforced(false);
@@ -252,6 +257,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         user,
         loading,
         authEnabled,
+        registrationEnabled,
         authStatusError,
         authMode,
         oidcEnabled,
