@@ -6,9 +6,7 @@
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 [![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com)
 
-A self-hosted dashboard and organizer for [Excalidraw](https://github.com/excalidraw/excalidraw) with live collaboration features. This is a custom edition for personal use, based on the great work of Zimeng Xiong who created [Excalidraw](https://github.com/ZimengXiong/ExcaliDash)
-
-![](readme-assets/demo.gif)
+A self-hosted dashboard and organizer for [Excalidraw](https://github.com/excalidraw/excalidraw) with live collaboration features, based on the great work of Zimeng Xiong who created [Excalidash](https://github.com/ZimengXiong/ExcaliDash). This is a customized edition for personal use.
 
 ## Table of Contents
 
