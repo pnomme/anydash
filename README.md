@@ -488,7 +488,7 @@ Common flags:
 </details>
 
 # Credits
-If you find AnyDash useful, please consider [sponsoring](https://github.com/sponsors/ZimengXiong)
+If you find AnyDash useful, please consider [sponsoring the origin author of ExcaliDash, Zimeng Xiong](https://github.com/sponsors/ZimengXiong) 
 - Example designs from:
   - https://github.com/Prakash-sa/system-design-ultimatum/tree/main
   - https://github.com/kitsteam/excalidraw-examples/tree/main
