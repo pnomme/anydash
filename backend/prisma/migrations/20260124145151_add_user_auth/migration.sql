@@ -39,7 +39,7 @@ INSERT INTO "SystemConfig" ("id", "registrationEnabled", "createdAt", "updatedAt
 VALUES ('default', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO "User" ("id", "username", "email", "passwordHash", "name", "role", "mustResetPassword", "isActive", "createdAt", "updatedAt")
-VALUES ('bootstrap-admin', NULL, 'bootstrap@excalidash.local', '', 'Bootstrap Admin', 'ADMIN', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('bootstrap-admin', NULL, 'bootstrap@anydash.local', '', 'Bootstrap Admin', 'ADMIN', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- RedefineTables
 PRAGMA defer_foreign_keys=ON;

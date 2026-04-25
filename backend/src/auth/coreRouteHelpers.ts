@@ -52,7 +52,7 @@ export const ensureBootstrapUserExists = async (
   await prisma.user.create({
     data: {
       id: bootstrapUserId,
-      email: "bootstrap@excalidash.local",
+      email: "bootstrap@anydash.local",
       username: null,
       passwordHash: "",
       name: "Bootstrap Admin",

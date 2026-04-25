@@ -1,5 +1,5 @@
-export const USER_KEY = 'excalidash-user';
-export const IMPERSONATION_KEY = 'excalidash-impersonation';
+export const USER_KEY = 'anydash-user';
+export const IMPERSONATION_KEY = 'anydash-impersonation';
 
 export type ImpersonationState = {
   original: {

@@ -6,7 +6,7 @@ import {
   RegisterImportExportDeps,
   ImportValidationError,
   assertSafeZipArchive,
-  excalidashManifestSchemaV1,
+  anydashManifestSchemaV1,
   findFirstDuplicate,
   getSafeZipEntry,
   getUserTrashCollectionId,
@@ -48,7 +48,7 @@ const resolveStagedUploadPath = async (
   return candidatePath;
 };
 
-export const registerExcalidashImportRoutes = (deps: RegisterImportExportDeps) => {
+export const registerAnyDashImportRoutes = (deps: RegisterImportExportDeps) => {
   const {
     app,
     prisma,
@@ -69,7 +69,7 @@ export const registerExcalidashImportRoutes = (deps: RegisterImportExportDeps) =
     MAX_IMPORT_TOTAL_EXTRACTED_BYTES,
   } = deps;
 
-  app.post("/import/excalidash/verify", requireAuth, upload.single("archive"), asyncHandler(async (req, res) => {
+  app.post("/import/anydash/verify", requireAuth, upload.single("archive"), asyncHandler(async (req, res) => {
     if (!req.user) return res.status(401).json({ error: "Unauthorized" });
     if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
@@ -94,15 +94,15 @@ export const registerExcalidashImportRoutes = (deps: RegisterImportExportDeps) =
         throw error;
       }
 
-      const manifestFile = getSafeZipEntry(zip, "excalidash.manifest.json");
+      const manifestFile = getSafeZipEntry(zip, "anydash.manifest.json");
       if (!manifestFile) {
-        return res.status(400).json({ error: "Invalid backup", message: "Missing excalidash.manifest.json" });
+        return res.status(400).json({ error: "Invalid backup", message: "Missing anydash.manifest.json" });
       }
       const rawManifest = await manifestFile.async("string");
       if (Buffer.byteLength(rawManifest, "utf8") > MAX_IMPORT_MANIFEST_BYTES) {
         return res.status(400).json({
           error: "Invalid backup manifest",
-          message: "excalidash.manifest.json is too large",
+          message: "anydash.manifest.json is too large",
         });
       }
 
@@ -112,14 +112,14 @@ export const registerExcalidashImportRoutes = (deps: RegisterImportExportDeps) =
       } catch {
         return res.status(400).json({
           error: "Invalid backup manifest",
-          message: "excalidash.manifest.json is not valid JSON",
+          message: "anydash.manifest.json is not valid JSON",
         });
       }
-      const parsed = excalidashManifestSchemaV1.safeParse(manifestJson);
+      const parsed = anydashManifestSchemaV1.safeParse(manifestJson);
       if (!parsed.success) {
         return res.status(400).json({
           error: "Invalid backup manifest",
-          message: "Malformed excalidash.manifest.json",
+          message: "Malformed anydash.manifest.json",
         });
       }
       const manifest = parsed.data;
@@ -170,7 +170,7 @@ export const registerExcalidashImportRoutes = (deps: RegisterImportExportDeps) =
         valid: true,
         formatVersion: manifest.formatVersion,
         exportedAt: manifest.exportedAt,
-        excalidashBackendVersion: manifest.excalidashBackendVersion || null,
+        anydashBackendVersion: manifest.anydashBackendVersion || null,
         collections: manifest.collections.length,
         drawings: manifest.drawings.length,
       });
@@ -179,7 +179,7 @@ export const registerExcalidashImportRoutes = (deps: RegisterImportExportDeps) =
     }
   }));
 
-  app.post("/import/excalidash", requireAuth, upload.single("archive"), asyncHandler(async (req, res) => {
+  app.post("/import/anydash", requireAuth, upload.single("archive"), asyncHandler(async (req, res) => {
     if (!req.user) return res.status(401).json({ error: "Unauthorized" });
     if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
@@ -204,15 +204,15 @@ export const registerExcalidashImportRoutes = (deps: RegisterImportExportDeps) =
         throw error;
       }
 
-      const manifestFile = getSafeZipEntry(zip, "excalidash.manifest.json");
+      const manifestFile = getSafeZipEntry(zip, "anydash.manifest.json");
       if (!manifestFile) {
-        return res.status(400).json({ error: "Invalid backup", message: "Missing excalidash.manifest.json" });
+        return res.status(400).json({ error: "Invalid backup", message: "Missing anydash.manifest.json" });
       }
       const rawManifest = await manifestFile.async("string");
       if (Buffer.byteLength(rawManifest, "utf8") > MAX_IMPORT_MANIFEST_BYTES) {
         return res.status(400).json({
           error: "Invalid backup manifest",
-          message: "excalidash.manifest.json is too large",
+          message: "anydash.manifest.json is too large",
         });
       }
 
@@ -222,14 +222,14 @@ export const registerExcalidashImportRoutes = (deps: RegisterImportExportDeps) =
       } catch {
         return res.status(400).json({
           error: "Invalid backup manifest",
-          message: "excalidash.manifest.json is not valid JSON",
+          message: "anydash.manifest.json is not valid JSON",
         });
       }
-      const parsed = excalidashManifestSchemaV1.safeParse(manifestJson);
+      const parsed = anydashManifestSchemaV1.safeParse(manifestJson);
       if (!parsed.success) {
         return res.status(400).json({
           error: "Invalid backup manifest",
-          message: "Malformed excalidash.manifest.json",
+          message: "Malformed anydash.manifest.json",
         });
       }
       const manifest = parsed.data;

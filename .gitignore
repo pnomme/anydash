@@ -25,7 +25,7 @@ backend/prisma/.migration-lock/
 
 # Local OIDC/Keycloak dev files
 docker-compose.oidc.local.yml
-ops/keycloak/realm-excalidash-local.json
+ops/keycloak/realm-anydash-local.json
 
 # Uploads
 backend/uploads/

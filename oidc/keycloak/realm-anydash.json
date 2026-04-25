@@ -1,7 +1,7 @@
 {
-  "realm": "excalidash",
+  "realm": "anydash",
   "enabled": true,
-  "displayName": "ExcaliDash (Local Dev)",
+  "displayName": "AnyDash (Local Dev)",
   "registrationAllowed": false,
   "resetPasswordAllowed": true,
   "loginWithEmailAllowed": true,
@@ -9,8 +9,8 @@
   "sslRequired": "none",
   "clients": [
     {
-      "clientId": "excalidash",
-      "name": "ExcaliDash",
+      "clientId": "anydash",
+      "name": "AnyDash",
       "protocol": "openid-connect",
       "enabled": true,
       "publicClient": true,

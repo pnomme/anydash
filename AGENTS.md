@@ -1,21 +1,21 @@
 # AGENTS.md
 
-This file helps two kinds of agents work on ExcaliDash.
+This file helps two kinds of agents work on AnyDash.
 
-## Project summary (what is ExcaliDash?)
+## Project summary (what is AnyDash?)
 
-ExcaliDash is a self-hosted dashboard and organizer for Excalidraw drawings, with persistent storage and live collaboration.
+AnyDash is a self-hosted dashboard and organizer for Excalidraw drawings, with persistent storage and live collaboration.
 Core user-facing features include organizing drawings into collections, search, export/import for backup, and configurable authentication (local and optional OIDC).
 
 ## Helpers (Operations)
 
 - Official supported deployment flow (production): `docker-compose.prod.yml`
-  - `curl -OL https://raw.githubusercontent.com/ZimengXiong/ExcaliDash/main/docker-compose.prod.yml`
+  - `curl -OL https://raw.githubusercontent.com/ZimengXiong/AnyDash/main/docker-compose.prod.yml`
   - `docker compose -f docker-compose.prod.yml pull`
   - `docker compose -f docker-compose.prod.yml up -d`
 - Production hardening quick checklist:
   - Pin images to a specific release tag (or digest) instead of `:latest` for reproducible upgrades/rollbacks.
-  - Stable tags are published as `zimengxiong/excalidash-backend:<VERSION>` and `zimengxiong/excalidash-frontend:<VERSION>` (and also `:latest`).
+  - Stable tags are published as `anycloudas/anydash-backend:<VERSION>` and `anycloudas/anydash-frontend:<VERSION>` (and also `:latest`).
   - Pre-release tags are published as `:dev` and `:<VERSION>-dev` (and do not update `:latest`).
   - Set fixed `JWT_SECRET` and `CSRF_SECRET` for portability and multi-instance/redeploy scenarios.
   - Set `FRONTEND_URL` to your public URL(s) and keep `TRUST_PROXY=false` unless you are behind a trusted proxy hop.
@@ -40,9 +40,9 @@ Pin to a stable release (recommended for production):
 ```yaml
 services:
   backend:
-    image: zimengxiong/excalidash-backend:0.4.18
+    image: anycloudas/anydash-backend:0.4.18
   frontend:
-    image: zimengxiong/excalidash-frontend:0.4.18
+    image: anycloudas/anydash-frontend:0.4.18
 ```
 
 Switch to pre-release images (rolling `:dev` tag):
@@ -50,9 +50,9 @@ Switch to pre-release images (rolling `:dev` tag):
 ```yaml
 services:
   backend:
-    image: zimengxiong/excalidash-backend:dev
+    image: anycloudas/anydash-backend:dev
   frontend:
-    image: zimengxiong/excalidash-frontend:dev
+    image: anycloudas/anydash-frontend:dev
 ```
 
 Switch to a specific pre-release build (pinned `:<VERSION>-dev` tag):
@@ -60,9 +60,9 @@ Switch to a specific pre-release build (pinned `:<VERSION>-dev` tag):
 ```yaml
 services:
   backend:
-    image: zimengxiong/excalidash-backend:0.4.18-dev
+    image: anycloudas/anydash-backend:0.4.18-dev
   frontend:
-    image: zimengxiong/excalidash-frontend:0.4.18-dev
+    image: anycloudas/anydash-frontend:0.4.18-dev
 ```
 
 Switch to a one-off custom dev tag (published by `make dev-release NAME=...`):
@@ -70,9 +70,9 @@ Switch to a one-off custom dev tag (published by `make dev-release NAME=...`):
 ```yaml
 services:
   backend:
-    image: zimengxiong/excalidash-backend:0.4.18-dev-issue38
+    image: anycloudas/anydash-backend:0.4.18-dev-issue38
   frontend:
-    image: zimengxiong/excalidash-frontend:0.4.18-dev-issue38
+    image: anycloudas/anydash-frontend:0.4.18-dev-issue38
 ```
 
 ## Contributors (Code Changes)
@@ -100,10 +100,10 @@ For setup and troubleshooting, start here.
   - If the agent has GitHub access, search issues for the exact error text/symptom and link the closest match.
   - If the agent cannot browse, ask the user to search and share the issue link (or paste issue text).
   - Note: `git` does not provide a native way to browse GitHub Issues. Use the web UI or GitHub CLI (`gh`).
-  - Issue tracker: `https://github.com/ZimengXiong/ExcaliDash/issues`
-  - Search tip: `https://github.com/ZimengXiong/ExcaliDash/issues?q=is%3Aissue+<paste+error+snippet>`
+  - Issue tracker: `https://github.com/ZimengXiong/AnyDash/issues`
+  - Search tip: `https://github.com/ZimengXiong/AnyDash/issues?q=is%3Aissue+<paste+error+snippet>`
   - If `gh` is available:
-    - Set repo: `gh repo set-default ZimengXiong/ExcaliDash`
+    - Set repo: `gh repo set-default ZimengXiong/AnyDash`
     - Search/list: `gh issue list --search "<error snippet>"`
     - View: `gh issue view <number> -w`
     - Create (guided): `gh issue create`
@@ -150,7 +150,7 @@ Understand runtime first, then touch code with local tests if requested.
 - `Makefile`: repo-wide orchestration commands.
 - `README.md`: user-facing installation and operational docs.
 - `VERSION`: version string used in builds.
-  - Local OIDC helper: `docker-compose.oidc.yml` + `oidc/keycloak/realm-excalidash.json` (Keycloak container + realm seed; no users/passwords committed)
+  - Local OIDC helper: `docker-compose.oidc.yml` + `oidc/keycloak/realm-anydash.json` (Keycloak container + realm seed; no users/passwords committed)
 
 ## Quick setup: local development
 
@@ -289,7 +289,7 @@ E2E variables:
 - `BACKEND_URL` is injected into `frontend/nginx.conf.template` to route:
   - `/api/` to backend API
   - `/socket.io/` to backend websocket
-- For Kubernetes, set `BACKEND_URL` to service DNS (example `excalidash-backend.default.svc.cluster.local:8000`).
+- For Kubernetes, set `BACKEND_URL` to service DNS (example `anydash-backend.default.svc.cluster.local:8000`).
 - Ensure TLS termination and `X-Forwarded-Proto` are consistent with proxy headers; auth + sockets depend on this.
 
 ## Architecture notes for contributor agents

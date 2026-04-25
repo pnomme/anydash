@@ -79,7 +79,7 @@ const getTargetMimeType = (originalMimeType: string): string => {
   return "image/webp";
 };
 
-const COMPRESSION_ENABLED_KEY = "excalidash-image-compression";
+const COMPRESSION_ENABLED_KEY = "anydash-image-compression";
 
 const isCompressionEnabled = (): boolean => {
   if (typeof window === "undefined") return true;

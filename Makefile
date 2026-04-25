@@ -2,14 +2,14 @@
         lint lint-frontend lint-backend clean docker-build docker-run docker-down docker-logs \
         release pre-release version-bump changelog changelog-open changelog-keep db-migrate db-reset
 
-DOCKER_USERNAME := zimengxiong
-IMAGE_NAME := excalidash
+DOCKER_USERNAME := anycloudas
+IMAGE_NAME := anydash
 VERSION := $(shell cat VERSION 2>/dev/null || echo "0.0.0")
 
 .DEFAULT_GOAL := help
 
 help: ## Show this help message
-	@TITLE="ExcaliDash Makefile"; \
+	@TITLE="AnyDash Makefile"; \
 	echo "$$TITLE |"; \
 	UNDERLINE=$$(printf '%*s' $$(( $${#TITLE} + 1 )) '' | tr ' ' '-'); \
 	echo "$$UNDERLINE|"
@@ -41,12 +41,12 @@ dev: ## Start backend+frontend in a tmux split screen (single-user local mode)
 		echo "Install tmux and try again."; \
 		exit 1; \
 	}
-	@SESSION="excalidash-dev"; \
+	@SESSION="anydash-dev"; \
 	if tmux has-session -t $$SESSION 2>/dev/null; then \
 		echo "Using existing tmux session: $$SESSION"; \
 	else \
 		echo "Creating tmux session: $$SESSION"; \
-		tmux new-session -d -s $$SESSION -c "$(CURDIR)" "cd backend && PORT=8001 AUTH_MODE=local EXCALIDASH_DEV_SINGLE_USER=true npm run dev"; \
+		tmux new-session -d -s $$SESSION -c "$(CURDIR)" "cd backend && PORT=8001 AUTH_MODE=local ANYDASH_DEV_SINGLE_USER=true npm run dev"; \
 		tmux split-window -h -t $$SESSION:0 -c "$(CURDIR)" "cd frontend && VITE_DEV_BACKEND_URL=http://localhost:8001 npm run dev"; \
 		tmux select-layout -t $$SESSION:0 even-horizontal; \
 		tmux select-pane -t $$SESSION:0.0; \
@@ -59,7 +59,7 @@ dev: ## Start backend+frontend in a tmux split screen (single-user local mode)
 
 dev-stop: ## Stop the tmux dev session
 	@STOPPED=0; \
-	for SESSION in excalidash-dev excalidash-dev-auth; do \
+	for SESSION in anydash-dev anydash-dev-auth; do \
 		if tmux has-session -t $$SESSION 2>/dev/null; then \
 			tmux kill-session -t $$SESSION; \
 			echo "Stopped tmux session: $$SESSION"; \
@@ -67,7 +67,7 @@ dev-stop: ## Stop the tmux dev session
 		fi; \
 	done; \
 	if [ $$STOPPED -eq 0 ]; then \
-		echo "No ExcaliDash tmux dev sessions are running"; \
+		echo "No AnyDash tmux dev sessions are running"; \
 	fi
 
 dev-frontend: ## Start frontend dev server only
@@ -82,7 +82,7 @@ dev-auth: ## Start backend+frontend in tmux using backend/.env auth settings
 		echo "Install tmux and try again."; \
 		exit 1; \
 	}
-	@SESSION="excalidash-dev-auth"; \
+	@SESSION="anydash-dev-auth"; \
 	if tmux has-session -t $$SESSION 2>/dev/null; then \
 		echo "Using existing tmux session: $$SESSION"; \
 	else \
@@ -342,7 +342,7 @@ release: ## Full release workflow (main branch only)
 	echo "Creating GitHub release..."; \
 	if command -v gh &> /dev/null; then \
 		gh release create "v$$NEW_VERSION" \
-			--title "ExcaliDash v$$NEW_VERSION" \
+			--title "AnyDash v$$NEW_VERSION" \
 			--notes-file RELEASE.md; \
 		echo "GitHub release created."; \
 	else \
@@ -442,7 +442,7 @@ pre-release: ## Pre-release workflow (pre-release branch only)
 	echo "Creating GitHub pre-release..."; \
 	if command -v gh &> /dev/null; then \
 		gh release create "$$PRE_TAG" \
-			--title "ExcaliDash $$PRE_TAG (Pre-release)" \
+			--title "AnyDash $$PRE_TAG (Pre-release)" \
 			--notes-file RELEASE.md \
 			--prerelease; \
 		echo "GitHub pre-release created."; \
@@ -462,10 +462,10 @@ pre-release: ## Pre-release workflow (pre-release branch only)
 	echo "Docker images published."
 
 release-docker: ## Build and push release Docker images
-	./scripts/publish-docker.sh
+	DOCKER_USERNAME="$(DOCKER_USERNAME)" IMAGE_NAME="$(IMAGE_NAME)" ./scripts/publish-docker.sh
 
 pre-release-docker: ## Build and push pre-release Docker images
-	./scripts/publish-docker-prerelease.sh
+	DOCKER_USERNAME="$(DOCKER_USERNAME)" IMAGE_NAME="$(IMAGE_NAME)" ./scripts/publish-docker-prerelease.sh
 
 dev-release: ## Build and push custom dev release (usage: make dev-release NAME=issue38)
 	@if [ -z "$(NAME)" ]; then \
@@ -476,7 +476,7 @@ dev-release: ## Build and push custom dev release (usage: make dev-release NAME=
 		exit 1; \
 	fi
 	@echo "Building custom dev release: $(NAME)"
-	@./scripts/publish-docker-dev.sh $(NAME)
+	@DOCKER_USERNAME="$(DOCKER_USERNAME)" IMAGE_NAME="$(IMAGE_NAME)" ./scripts/publish-docker-dev.sh $(NAME)
 
 db-migrate: ## Run database migrations
 	@echo "Running database migrations..."

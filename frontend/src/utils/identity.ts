@@ -7,7 +7,7 @@ export interface UserIdentity {
   color: string;
 }
 
-const DEVICE_ID_KEY = "excalidash-device-id";
+const DEVICE_ID_KEY = "anydash-device-id";
 
 const TRANSFORMERS = [
   { name: "Optimus Prime", initials: "OP" },
@@ -163,7 +163,7 @@ export const getFingerprintInitials = (seed?: string): string => {
 };
 
 export const getUserIdentity = (): UserIdentity => {
-  const stored = localStorage.getItem("excalidash-user-id");
+  const stored = localStorage.getItem("anydash-user-id");
   if (stored) {
     try {
       const parsed = JSON.parse(stored) as Partial<UserIdentity>;
@@ -183,7 +183,7 @@ export const getUserIdentity = (): UserIdentity => {
           color: parsed.color,
           initials: normalizedInitials,
         };
-        localStorage.setItem("excalidash-user-id", JSON.stringify(normalized));
+        localStorage.setItem("anydash-user-id", JSON.stringify(normalized));
         return normalized;
       }
     } catch {
@@ -192,7 +192,7 @@ export const getUserIdentity = (): UserIdentity => {
 
   const deviceId = getOrCreateBrowserFingerprint();
   // Deterministic guest identity derived from the device fingerprint.
-  // This keeps the "guest name" stable and consistent even if excalidash-user-id
+  // This keeps the "guest name" stable and consistent even if anydash-user-id
   // is cleared, and ensures initials always match the display name.
   const hash = hashString(deviceId);
   const transformer = TRANSFORMERS[hash % TRANSFORMERS.length];
@@ -205,6 +205,6 @@ export const getUserIdentity = (): UserIdentity => {
     color,
   };
 
-  localStorage.setItem("excalidash-user-id", JSON.stringify(identity));
+  localStorage.setItem("anydash-user-id", JSON.stringify(identity));
   return identity;
 };

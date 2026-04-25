@@ -10,7 +10,7 @@ import {
   toPublicTrashCollectionId,
 } from "./shared";
 
-export const registerExcalidashExportRoute = (deps: RegisterImportExportDeps) => {
+export const registerAnyDashExportRoute = (deps: RegisterImportExportDeps) => {
   const {
     app,
     prisma,
@@ -20,7 +20,7 @@ export const registerExcalidashExportRoute = (deps: RegisterImportExportDeps) =>
     parseJsonField,
   } = deps;
 
-  app.get("/export/excalidash", requireAuth, asyncHandler(async (req, res) => {
+  app.get("/export/anydash", requireAuth, asyncHandler(async (req, res) => {
     if (!req.user) return res.status(401).json({ error: "Unauthorized" });
     const trashCollectionId = getUserTrashCollectionId(req.user.id);
 
@@ -28,8 +28,8 @@ export const registerExcalidashExportRoute = (deps: RegisterImportExportDeps) =>
     const zipSuffix = extParam === "zip";
     const date = new Date().toISOString().split("T")[0];
     const filename = zipSuffix
-      ? `excalidash-backup-${date}.excalidash.zip`
-      : `excalidash-backup-${date}.excalidash`;
+      ? `anydash-backup-${date}.anydash.zip`
+      : `anydash-backup-${date}.anydash`;
 
     const exportedAt = new Date().toISOString();
     const drawings = await prisma.drawing.findMany({
@@ -99,10 +99,10 @@ export const registerExcalidashExportRoute = (deps: RegisterImportExportDeps) =>
       .filter((collection, index, all) => all.findIndex((c) => c.id === collection.id) === index);
 
     const manifest = {
-      format: "excalidash" as const,
+      format: "anydash" as const,
       formatVersion: 1 as const,
       exportedAt,
-      excalidashBackendVersion: getBackendVersion(),
+      anydashBackendVersion: getBackendVersion(),
       userId: req.user.id,
       unorganizedFolder,
       collections: manifestCollections,
@@ -137,7 +137,7 @@ export const registerExcalidashExportRoute = (deps: RegisterImportExportDeps) =>
     });
     archive.pipe(res);
 
-    archive.append(JSON.stringify(manifest, null, 2), { name: "excalidash.manifest.json" });
+    archive.append(JSON.stringify(manifest, null, 2), { name: "anydash.manifest.json" });
 
     const drawingsManifestById = new Map(drawingsManifest.map((d) => [d.id, d]));
     for (const drawing of drawings) {
@@ -150,7 +150,7 @@ export const registerExcalidashExportRoute = (deps: RegisterImportExportDeps) =>
         elements: parseJsonField(drawing.elements, [] as unknown[]),
         appState: parseJsonField(drawing.appState, {} as Record<string, unknown>),
         files: parseJsonField(drawing.files, {} as Record<string, unknown>),
-        excalidash: {
+        anydash: {
           drawingId: drawing.id,
           collectionId: drawing.collectionId ?? null,
           exportedAt,
@@ -160,13 +160,13 @@ export const registerExcalidashExportRoute = (deps: RegisterImportExportDeps) =>
       archive.append(JSON.stringify(drawingData, null, 2), { name: meta.filePath });
     }
 
-    const readme = `ExcaliDash Backup (.excalidash)
+    const readme = `AnyDash Backup (.anydash)
 
-This file is a zip archive containing a versioned ExcaliDash manifest and your drawings,
+This file is a zip archive containing a versioned AnyDash manifest and your drawings,
 organized into folders by collection.
 
 Files:
-- excalidash.manifest.json (required)
+- anydash.manifest.json (required)
 - <Collection Folder>/*.excalidraw
 
 ExportedAt: ${exportedAt}

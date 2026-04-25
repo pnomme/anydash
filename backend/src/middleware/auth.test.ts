@@ -63,7 +63,7 @@ describe("auth middleware", () => {
     authModeService.getBootstrapActingUser.mockResolvedValue({
       id: BOOTSTRAP_USER_ID,
       username: null,
-      email: "bootstrap@excalidash.local",
+      email: "bootstrap@anydash.local",
       name: "Bootstrap Admin",
       role: "ADMIN",
       mustResetPassword: true,

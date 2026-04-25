@@ -42,8 +42,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const USER_KEY = 'excalidash-user';
-const AUTH_ENABLED_CACHE_KEY = "excalidash-auth-enabled";
+const USER_KEY = 'anydash-user';
+const AUTH_ENABLED_CACHE_KEY = "anydash-auth-enabled";
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);

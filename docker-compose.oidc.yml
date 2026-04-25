@@ -1,3 +1,5 @@
+name: anydash-oidc
+
 services:
   # Local OIDC provider for development (Keycloak).
   #
@@ -17,5 +19,5 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./oidc/keycloak/realm-excalidash.json:/opt/keycloak/data/import/realm-excalidash.json:ro
+      - ./oidc/keycloak/realm-anydash.json:/opt/keycloak/data/import/realm-anydash.json:ro
     restart: unless-stopped

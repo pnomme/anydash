@@ -116,7 +116,7 @@ describe("/auth/status registration policy", () => {
       optionalAuth: ((req: any, _res: any, next: any) => {
         req.user = {
           id: "bootstrap-user",
-          email: "bootstrap@excalidash.local",
+          email: "bootstrap@anydash.local",
           name: "Bootstrap Admin",
           role: "ADMIN",
         };

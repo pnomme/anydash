@@ -63,7 +63,7 @@ export const AuthSetupChoice: React.FC = () => {
     setError('');
     try {
       const response = await api.authOnboardingChoice(enableAuth);
-      localStorage.setItem('excalidash-auth-enabled', String(response.authEnabled));
+      localStorage.setItem('anydash-auth-enabled', String(response.authEnabled));
 
       if (response.authEnabled) {
         window.location.href = response.bootstrapRequired ? '/register' : '/login';
@@ -103,8 +103,8 @@ export const AuthSetupChoice: React.FC = () => {
           <p className="mt-4 text-sm sm:text-base text-gray-600 dark:text-gray-300">
             {step === 'choice'
               ? isMigrationMode
-                ? 'We detected existing data from an earlier ExcaliDash version.'
-                : 'This looks like a new ExcaliDash setup.'
+                ? 'We detected existing data from an earlier AnyDash version.'
+                : 'This looks like a new AnyDash setup.'
               : 'This option is only recommended for private, trusted networks.'}
           </p>
         </div>
@@ -129,7 +129,7 @@ export const AuthSetupChoice: React.FC = () => {
 
               {isMigrationMode && (
                 <div className="mb-6 rounded-lg border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 p-4 text-sm text-blue-800 dark:text-blue-200">
-                  ExcaliDash v0.4 adds multi-user and OIDC support. Enabling authentication secures upgraded instances before sharing access.
+                  AnyDash v0.4 adds multi-user and OIDC support. Enabling authentication secures upgraded instances before sharing access.
                 </div>
               )}
 

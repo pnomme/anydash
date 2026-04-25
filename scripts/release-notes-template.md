@@ -1,4 +1,4 @@
-# ExcaliDash v{{VERSION}}
+# AnyDash v{{VERSION}}
 
 Release date: {{DATE}}
 
@@ -27,9 +27,9 @@ Edit `docker-compose.prod.yml` and pin the release tags:
 ```yaml
 services:
   backend:
-    image: zimengxiong/excalidash-backend:{{TAG}}
+    image: anycloudas/anydash-backend:{{TAG}}
   frontend:
-    image: zimengxiong/excalidash-frontend:{{TAG}}
+    image: anycloudas/anydash-frontend:{{TAG}}
 ```
 
 Example:

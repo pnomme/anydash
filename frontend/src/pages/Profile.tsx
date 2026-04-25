@@ -97,7 +97,7 @@ export const Profile: React.FC = () => {
             const response = await api.api.put<{ user: { id: string; email: string; name: string; createdAt: string; updatedAt: string } }>('/auth/profile', { name: name.trim() });
             setSuccess('Name updated successfully');
             if (response.data?.user) {
-                localStorage.setItem('excalidash-user', JSON.stringify(response.data.user));
+                localStorage.setItem('anydash-user', JSON.stringify(response.data.user));
                 setTimeout(() => window.location.reload(), 500);
             }
         } catch (err: unknown) {
@@ -252,7 +252,7 @@ export const Profile: React.FC = () => {
                                         Password reset required
                                     </p>
                                     <p className="text-sm text-amber-800 dark:text-amber-200/80 font-medium mt-1">
-                                        Change your password below before using ExcaliDash.
+                                        Change your password below before using AnyDash.
                                     </p>
                                 </div>
                             )}

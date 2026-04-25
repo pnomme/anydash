@@ -13,7 +13,7 @@ function log(message = '') {
 }
 
 function showHelp() {
-  log('ExcaliDash Version Manager');
+  log('AnyDash Version Manager');
   log('');
   log('Usage: node scripts/version-manager.js [COMMAND] [VERSION_TYPE]');
   log('');

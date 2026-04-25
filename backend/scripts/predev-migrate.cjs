@@ -94,7 +94,7 @@ const shouldForceSingleUserDev =
   isNonProd &&
   process.env.AUTH_MODE !== "hybrid" &&
   process.env.AUTH_MODE !== "oidc_enforced" &&
-  /^(1|true|yes)$/i.test(process.env.EXCALIDASH_DEV_SINGLE_USER || "");
+  /^(1|true|yes)$/i.test(process.env.ANYDASH_DEV_SINGLE_USER || "");
 
 const forceSingleUserDevMode = async () => {
   const { PrismaClient } = require("../src/generated/client");

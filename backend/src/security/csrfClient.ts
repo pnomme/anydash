@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-export const CSRF_CLIENT_COOKIE_NAME = "excalidash-csrf-client";
+export const CSRF_CLIENT_COOKIE_NAME = "anydash-csrf-client";
 
 export const parseCookies = (cookieHeader: string | undefined): Record<string, string> => {
   if (!cookieHeader) return {};

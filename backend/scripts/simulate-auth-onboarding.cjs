@@ -213,7 +213,7 @@ const nodeEnv = process.env.NODE_ENV || "development";
       await tx.user.upsert({
         where: { id: BOOTSTRAP_USER_ID },
         update: {
-          email: "bootstrap@excalidash.local",
+          email: "bootstrap@anydash.local",
           username: null,
           passwordHash: "",
           name: "Bootstrap Admin",
@@ -223,7 +223,7 @@ const nodeEnv = process.env.NODE_ENV || "development";
         },
         create: {
           id: BOOTSTRAP_USER_ID,
-          email: "bootstrap@excalidash.local",
+          email: "bootstrap@anydash.local",
           username: null,
           passwordHash: "",
           name: "Bootstrap Admin",

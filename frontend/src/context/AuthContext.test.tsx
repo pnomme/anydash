@@ -57,7 +57,7 @@ describe("AuthProvider", () => {
 
   it("clears stored auth state when backend reports auth disabled", async () => {
     const storage = new Map<string, string>([
-      ["excalidash-user", JSON.stringify({ id: "u1" })],
+      ["anydash-user", JSON.stringify({ id: "u1" })],
     ]);
     Object.defineProperty(window, "localStorage", {
       configurable: true,
@@ -87,13 +87,13 @@ describe("AuthProvider", () => {
     });
     expect(screen.getByTestId("auth-enabled").textContent).toBe("false");
     expect(screen.getByTestId("auth-status-error").textContent).toBe("null");
-    expect(storage.get("excalidash-user")).toBeUndefined();
+    expect(storage.get("anydash-user")).toBeUndefined();
   });
 
   it("uses cached auth-disabled mode when /auth/status is temporarily unavailable", async () => {
     const storage = new Map<string, string>([
-      ["excalidash-auth-enabled", "false"],
-      ["excalidash-user", JSON.stringify({ id: "u1" })],
+      ["anydash-auth-enabled", "false"],
+      ["anydash-user", JSON.stringify({ id: "u1" })],
     ]);
     Object.defineProperty(window, "localStorage", {
       configurable: true,
@@ -123,7 +123,7 @@ describe("AuthProvider", () => {
     });
     expect(screen.getByTestId("auth-enabled").textContent).toBe("false");
     expect(screen.getByTestId("auth-status-error").textContent).toBe("null");
-    expect(storage.get("excalidash-user")).toBeUndefined();
+    expect(storage.get("anydash-user")).toBeUndefined();
   });
 
   it("can recover after retry when auth status becomes reachable", async () => {

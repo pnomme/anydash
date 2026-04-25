@@ -203,7 +203,7 @@ describe("OIDC callback alg mismatch fallback", () => {
     const response = await request(app)
       .get("/oidc/callback?code=test-code&state=state-fixed")
       .set("Cookie", [
-        `excalidash-oidc-flow=${makeFlowCookie("test-secret")}`,
+        `anydash-oidc-flow=${makeFlowCookie("test-secret")}`,
       ]);
 
     expect(response.status).toBe(302);
@@ -222,7 +222,7 @@ describe("OIDC callback alg mismatch fallback", () => {
     const response = await request(app)
       .get("/oidc/callback?code=test-code&state=state-fixed")
       .set("Cookie", [
-        `excalidash-oidc-flow=${makeFlowCookie("test-secret")}`,
+        `anydash-oidc-flow=${makeFlowCookie("test-secret")}`,
       ]);
 
     expect(response.status).toBe(302);

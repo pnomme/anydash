@@ -85,7 +85,7 @@ describe("authMode service", () => {
     const userUpsert = prisma.user.upsert as unknown as ReturnType<typeof vi.fn>;
     userUpsert.mockResolvedValue({
       id: BOOTSTRAP_USER_ID,
-      email: "bootstrap@excalidash.local",
+      email: "bootstrap@anydash.local",
       name: "Bootstrap Admin",
       role: "ADMIN",
       isActive: false,
@@ -102,7 +102,7 @@ describe("authMode service", () => {
         where: { id: BOOTSTRAP_USER_ID },
         create: expect.objectContaining({
           id: BOOTSTRAP_USER_ID,
-          email: "bootstrap@excalidash.local",
+          email: "bootstrap@anydash.local",
           role: "ADMIN",
         }),
       })

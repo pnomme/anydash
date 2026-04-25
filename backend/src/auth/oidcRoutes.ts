@@ -5,7 +5,7 @@ import { generators, Issuer } from "openid-client";
 import { logAuditEvent } from "../utils/audit";
 import { hashTokenForStorage } from "./tokenSecurity";
 
-const OIDC_FLOW_COOKIE_NAME = "excalidash-oidc-flow";
+const OIDC_FLOW_COOKIE_NAME = "anydash-oidc-flow";
 const OIDC_PROVIDER_KEY = "oidc";
 const OIDC_FLOW_TTL_MS = 10 * 60 * 1000;
 
@@ -337,7 +337,7 @@ export const registerOidcRoutes = (deps: RegisterOidcRoutesDeps) => {
 
     throw new Error(
       `OIDC provider does not advertise support for client_secret-based token endpoint auth methods (tried: ${preferred.join(", ")}). ` +
-        `If your provider requires JWT-based client auth (private_key_jwt/client_secret_jwt), ExcaliDash currently does not expose configuration for that.`
+        `If your provider requires JWT-based client auth (private_key_jwt/client_secret_jwt), AnyDash currently does not expose configuration for that.`
     );
   };
 

@@ -1,11 +1,11 @@
-import { registerExcalidashImportRoutes } from "./excalidashImportRoutes";
-import { registerExcalidashExportRoute } from "./exportRoutes";
+import { registerAnyDashImportRoutes } from "./anydashImportRoutes";
+import { registerAnyDashExportRoute } from "./exportRoutes";
 import { registerLegacySqliteImportRoutes } from "./legacySqliteImportRoutes";
 import { RegisterImportExportDeps } from "./shared";
 
 export const registerImportExportRoutes = (deps: RegisterImportExportDeps) => {
-  registerExcalidashExportRoute(deps);
-  registerExcalidashImportRoutes(deps);
+  registerAnyDashExportRoute(deps);
+  registerAnyDashImportRoutes(deps);
   registerLegacySqliteImportRoutes(deps);
 };
 

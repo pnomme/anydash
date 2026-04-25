@@ -1,7 +1,7 @@
 {
-  "name": "excalidash-e2e",
+  "name": "anydash-e2e",
   "version": "1.0.0",
-  "description": "E2E browser tests for ExcaliDash",
+  "description": "E2E browser tests for AnyDash",
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",

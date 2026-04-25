@@ -2,8 +2,8 @@ import type { Request, Response } from "express";
 import ms, { type StringValue } from "ms";
 import { config } from "../config";
 
-export const ACCESS_TOKEN_COOKIE_NAME = "excalidash-access-token";
-export const REFRESH_TOKEN_COOKIE_NAME = "excalidash-refresh-token";
+export const ACCESS_TOKEN_COOKIE_NAME = "anydash-access-token";
+export const REFRESH_TOKEN_COOKIE_NAME = "anydash-refresh-token";
 
 const DEFAULT_ACCESS_TTL_MS = 15 * 60 * 1000;
 const DEFAULT_REFRESH_TTL_MS = 7 * 24 * 60 * 60 * 1000;

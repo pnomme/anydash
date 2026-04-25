@@ -12,7 +12,7 @@ import {
  * E2E Tests for Export/Import functionality
  * 
  * Tests the export/import feature:
- * - Export/Import `.excalidash` backups
+ * - Export/Import `.anydash` backups
  * - Import `.excalidraw` and JSON files
  * - Legacy SQLite verification/import endpoints
  */
@@ -50,15 +50,15 @@ test.describe("Export Functionality", () => {
     await expect(page.getByRole("button", { name: /^Export$/ })).toBeVisible();
     const downloadNameSelect = page.getByRole("combobox", { name: "Download name" });
     await expect(downloadNameSelect).toBeVisible();
-    await expect(downloadNameSelect.locator('option[value="excalidash"]')).toHaveText(".excalidash");
-    await expect(downloadNameSelect.locator('option[value="excalidash.zip"]')).toHaveText(".excalidash.zip");
+    await expect(downloadNameSelect.locator('option[value="anydash"]')).toHaveText(".anydash");
+    await expect(downloadNameSelect.locator('option[value="anydash.zip"]')).toHaveText(".anydash.zip");
   });
 
-  test("should export .excalidash via API", async ({ request }) => {
+  test("should export .anydash via API", async ({ request }) => {
     const drawing = await createDrawing(request, { name: `Export_API_${Date.now()}` });
     createdDrawingIds.push(drawing.id);
 
-    const response = await request.get(`${API_URL}/export/excalidash`);
+    const response = await request.get(`${API_URL}/export/anydash`);
     expect(response.ok()).toBe(true);
 
     const contentType = response.headers()["content-type"];
@@ -66,14 +66,14 @@ test.describe("Export Functionality", () => {
 
     const contentDisposition = response.headers()["content-disposition"];
     expect(contentDisposition).toContain("attachment");
-    expect(contentDisposition).toMatch(/excalidash-backup.*\.excalidash/);
+    expect(contentDisposition).toMatch(/anydash-backup.*\.anydash/);
   });
 
-  test("should export .excalidash.zip via API", async ({ request }) => {
+  test("should export .anydash.zip via API", async ({ request }) => {
     const drawing = await createDrawing(request, { name: `Export_Zip_${Date.now()}` });
     createdDrawingIds.push(drawing.id);
 
-    const response = await request.get(`${API_URL}/export/excalidash?ext=zip`);
+    const response = await request.get(`${API_URL}/export/anydash?ext=zip`);
     expect(response.ok()).toBe(true);
 
     const contentType = response.headers()["content-type"];
@@ -81,7 +81,7 @@ test.describe("Export Functionality", () => {
 
     const contentDisposition = response.headers()["content-disposition"];
     expect(contentDisposition).toContain("attachment");
-    expect(contentDisposition).toMatch(/excalidash-backup.*\.excalidash\.zip/);
+    expect(contentDisposition).toMatch(/anydash-backup.*\.anydash\.zip/);
   });
 });
 

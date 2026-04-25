@@ -2,13 +2,13 @@ import { PrismaClient } from "../generated/client";
 
 declare global {
   // eslint-disable-next-line no-var
-  var __excalidashPrisma: PrismaClient | undefined;
+  var __anydashPrisma: PrismaClient | undefined;
 }
 
-const prismaClient = globalThis.__excalidashPrisma ?? new PrismaClient();
+const prismaClient = globalThis.__anydashPrisma ?? new PrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
-  globalThis.__excalidashPrisma = prismaClient;
+  globalThis.__anydashPrisma = prismaClient;
 }
 
 export { prismaClient as prisma };

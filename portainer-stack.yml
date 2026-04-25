@@ -1,0 +1,69 @@
+name: anydash
+
+services:
+  backend:
+    image: anycloudas/anydash-backend:${ANYDASH_TAG:-latest}
+    environment:
+      DATABASE_URL: file:/app/prisma/dev.db
+      PORT: "8000"
+      NODE_ENV: production
+      AUTH_MODE: ${AUTH_MODE:-local}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:6767}
+      TRUST_PROXY: ${TRUST_PROXY:-false}
+      ENFORCE_HTTPS_REDIRECT: ${ENFORCE_HTTPS_REDIRECT:-true}
+      UPDATE_CHECK_OUTBOUND: ${UPDATE_CHECK_OUTBOUND:-true}
+      JWT_SECRET: ${JWT_SECRET:-}
+      CSRF_SECRET: ${CSRF_SECRET:-}
+      # OIDC_PROVIDER_NAME: ${OIDC_PROVIDER_NAME:-OIDC}
+      # OIDC_ISSUER_URL: ${OIDC_ISSUER_URL}
+      # OIDC_CLIENT_ID: ${OIDC_CLIENT_ID}
+      # OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
+      # OIDC_REDIRECT_URI: ${OIDC_REDIRECT_URI}
+    volumes:
+      - backend-data:/app/prisma
+    networks:
+      - anydash
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://127.0.0.1:8000/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    image: anycloudas/anydash-frontend:${ANYDASH_TAG:-latest}
+    environment:
+      BACKEND_URL: backend:8000
+    ports:
+      - "${ANYDASH_PORT:-6767}:80"
+    depends_on:
+      - backend
+    networks:
+      - anydash
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://127.0.0.1:80",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  anydash:
+    driver: bridge
+
+volumes:
+  backend-data:

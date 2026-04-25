@@ -32,8 +32,8 @@ export const getUpdateInfo = async (channel: UpdateChannel): Promise<UpdateInfo>
   return response.data;
 };
 
-const USER_KEY = 'excalidash-user';
-const AUTH_ENABLED_CACHE_KEY = "excalidash-auth-enabled";
+const USER_KEY = 'anydash-user';
+const AUTH_ENABLED_CACHE_KEY = "anydash-auth-enabled";
 const AUTH_STATUS_TTL_MS = 5000;
 
 type RetriableRequestConfig = {

@@ -1,7 +1,7 @@
 {
-  "realm": "excalidash",
+  "realm": "anydash",
   "enabled": true,
-  "displayName": "ExcaliDash (Local Multi Stack)",
+  "displayName": "AnyDash (Local Multi Stack)",
   "registrationAllowed": false,
   "resetPasswordAllowed": true,
   "loginWithEmailAllowed": true,
@@ -9,12 +9,12 @@
   "sslRequired": "none",
   "clients": [
     {
-      "clientId": "excalidash",
-      "name": "ExcaliDash",
+      "clientId": "anydash",
+      "name": "AnyDash",
       "protocol": "openid-connect",
       "enabled": true,
       "publicClient": false,
-      "secret": "excalidash-secret",
+      "secret": "anydash-secret",
       "standardFlowEnabled": true,
       "directAccessGrantsEnabled": true,
       "redirectUris": [

@@ -16,11 +16,11 @@ export class ImportValidationError extends Error {
   }
 }
 
-export const excalidashManifestSchemaV1 = z.object({
-  format: z.literal("excalidash"),
+export const anydashManifestSchemaV1 = z.object({
+  format: z.literal("anydash"),
   formatVersion: z.literal(1),
   exportedAt: z.string().min(1),
-  excalidashBackendVersion: z.string().optional(),
+  anydashBackendVersion: z.string().optional(),
   userId: z.string().optional(),
   unorganizedFolder: z.string().min(1),
   collections: z.array(

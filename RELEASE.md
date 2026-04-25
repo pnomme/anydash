@@ -32,9 +32,9 @@ Edit `docker-compose.prod.yml` and pin the release tags:
 ```yaml
 services:
   backend:
-    image: zimengxiong/excalidash-backend:v0.5.0
+    image: anycloudas/anydash-backend:v0.5.0
   frontend:
-    image: zimengxiong/excalidash-frontend:v0.5.0
+    image: anycloudas/anydash-frontend:v0.5.0
 ```
 
 Example:

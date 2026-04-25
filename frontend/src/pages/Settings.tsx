@@ -37,14 +37,14 @@ export const Settings: React.FC = () => {
     });
     const [authDisableFinalConfirmOpen, setAuthDisableFinalConfirmOpen] = useState(false);
 
-    const [backupExportExt, setBackupExportExt] = useState<'excalidash' | 'excalidash.zip'>('excalidash');
+    const [backupExportExt, setBackupExportExt] = useState<'anydash' | 'anydash.zip'>('anydash');
     const [backupImportConfirmation, setBackupImportConfirmation] = useState<{
         isOpen: boolean;
         file: File | null;
         info: null | {
             formatVersion: number;
             exportedAt: string;
-            excalidashBackendVersion: string | null;
+            anydashBackendVersion: string | null;
             collections: number;
             drawings: number;
         };
@@ -57,8 +57,8 @@ export const Settings: React.FC = () => {
     const buildLabel = import.meta.env.VITE_APP_BUILD_LABEL;
     const isManagedAuthMode = authMode !== 'local';
 
-    const UPDATE_CHANNEL_KEY = 'excalidash-update-channel';
-    const UPDATE_INFO_KEY = 'excalidash-update-info';
+    const UPDATE_CHANNEL_KEY = 'anydash-update-channel';
+    const UPDATE_INFO_KEY = 'anydash-update-info';
     const [updateChannel, setUpdateChannel] = useState<api.UpdateChannel>(() => {
         const raw = typeof window === 'undefined' ? null : window.localStorage?.getItem?.(UPDATE_CHANNEL_KEY) ?? null;
         return raw === 'prerelease' ? 'prerelease' : 'stable';
@@ -79,7 +79,7 @@ export const Settings: React.FC = () => {
         fetchCollections();
     }, []);
 
-    const COMPRESSION_ENABLED_KEY = 'excalidash-image-compression';
+    const COMPRESSION_ENABLED_KEY = 'anydash-image-compression';
     const [imageCompression, setImageCompression] = useState<boolean>(() => {
         const raw = typeof window === 'undefined' ? null : window.localStorage?.getItem?.(COMPRESSION_ENABLED_KEY);
         return raw !== 'false';
@@ -159,16 +159,16 @@ export const Settings: React.FC = () => {
 
     const exportBackup = async () => {
         try {
-            const extQuery = backupExportExt === 'excalidash.zip' ? '?ext=zip' : '';
-            const response = await api.api.get(`/export/excalidash${extQuery}`, { responseType: 'blob' });
+            const extQuery = backupExportExt === 'anydash.zip' ? '?ext=zip' : '';
+            const response = await api.api.get(`/export/anydash${extQuery}`, { responseType: 'blob' });
             const blob = new Blob([response.data], { type: 'application/zip' });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
             const date = new Date().toISOString().split('T')[0];
-            link.download = backupExportExt === 'excalidash.zip'
-                ? `excalidash-backup-${date}.excalidash.zip`
-                : `excalidash-backup-${date}.excalidash`;
+            link.download = backupExportExt === 'anydash.zip'
+                ? `anydash-backup-${date}.anydash.zip`
+                : `anydash-backup-${date}.anydash`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -188,10 +188,10 @@ export const Settings: React.FC = () => {
                 valid: boolean;
                 formatVersion: number;
                 exportedAt: string;
-                excalidashBackendVersion: string | null;
+                anydashBackendVersion: string | null;
                 collections: number;
                 drawings: number;
-            }>('/import/excalidash/verify', formData, {
+            }>('/import/anydash/verify', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
 
@@ -201,7 +201,7 @@ export const Settings: React.FC = () => {
                 info: {
                     formatVersion: response.data.formatVersion,
                     exportedAt: response.data.exportedAt,
-                    excalidashBackendVersion: response.data.excalidashBackendVersion ?? null,
+                    anydashBackendVersion: response.data.anydashBackendVersion ?? null,
                     collections: response.data.collections,
                     drawings: response.data.drawings,
                 },
@@ -307,7 +307,7 @@ export const Settings: React.FC = () => {
                     <div className="text-center">
                         <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">Export Backup</h3>
                         <p className="text-xs text-slate-500 dark:text-neutral-400 font-medium max-w-[200px] mx-auto">
-                            Exports an `.excalidash` archive organized by collections
+                            Exports an `.anydash` archive organized by collections
                         </p>
                     </div>
                     <div className="w-full flex flex-col items-stretch gap-2 pt-2">
@@ -323,8 +323,8 @@ export const Settings: React.FC = () => {
                             className="w-full px-3 py-2 text-sm font-bold rounded-xl border-2 border-slate-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-slate-900 dark:text-white"
                             title="Download name"
                         >
-                            <option value="excalidash">.excalidash</option>
-                            <option value="excalidash.zip">.excalidash.zip</option>
+                            <option value="anydash">.anydash</option>
+                            <option value="anydash.zip">.anydash.zip</option>
                         </select>
                     </div>
                 </div>
@@ -468,7 +468,7 @@ export const Settings: React.FC = () => {
                         </button>
 
                         <a
-                            href="https://github.com/ZimengXiong/ExcaliDash/releases"
+                            href="https://github.com/ZimengXiong/AnyDash/releases"
                             target="_blank"
                             rel="noreferrer"
                             className="flex items-center justify-center gap-2 h-10 sm:h-11 rounded-xl border-2 border-black dark:border-neutral-700 bg-indigo-600 text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-[9px] sm:text-[10px] font-black uppercase tracking-wider hover:-translate-y-0.5 transition-all active:translate-y-0 active:shadow-none"
@@ -493,7 +493,7 @@ export const Settings: React.FC = () => {
                     <div className="relative">
                         <input
                             type="file"
-                            accept=".excalidash,.zip"
+                            accept=".anydash,.zip"
                             className="hidden"
                             id="settings-import-backup"
                             onChange={async (e) => {
@@ -517,7 +517,7 @@ export const Settings: React.FC = () => {
                                     {backupImportLoading ? 'Verifying…' : 'Import Backup'}
                                 </h3>
                                 <p className="text-xs text-slate-500 dark:text-neutral-400 font-medium max-w-[200px] mx-auto">
-                                    Merge-import a `.excalidash` backup into your account
+                                    Merge-import a `.anydash` backup into your account
                                 </p>
                             </div>
                         </button>
@@ -781,7 +781,7 @@ export const Settings: React.FC = () => {
                     try {
                         const formData = new FormData();
                         formData.append('archive', file);
-                        await api.api.post('/import/excalidash', formData, {
+                        await api.api.post('/import/anydash', formData, {
                             headers: { 'Content-Type': 'multipart/form-data' },
                         });
                         setBackupImportConfirmation({ isOpen: false, file: null, info: null });

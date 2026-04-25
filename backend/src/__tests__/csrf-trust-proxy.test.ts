@@ -2,7 +2,7 @@
  * Issue #38: CSRF fails with multiple reverse proxies
  *
  * This test demonstrates how trust proxy settings affect CSRF validation
- * when ExcaliDash is behind multiple proxy layers (e.g., Traefik, Synology NAS)
+ * when AnyDash is behind multiple proxy layers (e.g., Traefik, Synology NAS)
  */
 
 import { describe, it, expect, beforeEach, afterEach } from "vitest";

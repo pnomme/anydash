@@ -150,7 +150,7 @@ const main = async () => {
       ? supportedAuthMethods.some((m) => m === "client_secret_basic" || m === "client_secret_post")
       : supportedAuthMethods.includes("none");
 
-  console.log("ExcaliDash OIDC Doctor");
+  console.log("AnyDash OIDC Doctor");
   console.log("======================");
   printLine("Provider (detected)", provider);
   printLine("Provider name (env)", providerName);

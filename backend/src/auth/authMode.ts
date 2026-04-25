@@ -75,7 +75,7 @@ export const createAuthModeService = (
       update: {},
       create: {
         id: BOOTSTRAP_USER_ID,
-        email: "bootstrap@excalidash.local",
+        email: "bootstrap@anydash.local",
         username: null,
         passwordHash: "",
         name: "Bootstrap Admin",

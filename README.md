@@ -1,8 +1,8 @@
-<img src="readme-assets/logoExcaliDash.png" alt="ExcaliDash Logo" width="80" height="88">
+<img src="readme-assets/logoAnyDash.png" alt="AnyDash Logo" width="80" height="88">
 
-# ExcaliDash
+# AnyDash
 
-![License](https://img.shields.io/github/license/zimengxiong/ExcaliDash)
+![License](https://img.shields.io/github/license/zimengxiong/AnyDash)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 [![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com)
 
@@ -80,7 +80,7 @@ A self-hosted dashboard and organizer for [Excalidraw](https://github.com/excali
 <details>
 <summary>Export/import your drawings for backup</summary>
 
-### Excalidash uses a non-proprietary archival format that stores your drawings in plain .excalidraw format
+### AnyDash uses a non-proprietary archival format that stores your drawings in plain .excalidraw format
 
 ![](readme-assets/backupsImport.gif)
 
@@ -88,9 +88,9 @@ A self-hosted dashboard and organizer for [Excalidraw](https://github.com/excali
 
 # Upgrading
 
-See [release notes](https://github.com/ZimengXiong/ExcaliDash/releases) for a specific release.
+See [release notes](https://github.com/ZimengXiong/AnyDash/releases) for a specific release.
 
-ExcaliDash includes an in-app update notifier that checks GitHub Releases. If your deployment must not make outbound network calls, disable it on the backend:
+AnyDash includes an in-app update notifier that checks GitHub Releases. If your deployment must not make outbound network calls, disable it on the backend:
 
 ```bash
 UPDATE_CHECK_OUTBOUND=false
@@ -125,7 +125,7 @@ Notes:
 > use TLS, trusted reverse proxy, fixed secrets, backups, and endpoint rate limits.
 
 > [!CAUTION]
-> ExcaliDash is in BETA. Please backup your data regularly.
+> AnyDash is in BETA. Please backup your data regularly.
 
 ## Quickstart
 
@@ -138,7 +138,7 @@ Prereqs: Docker + Docker Compose v2.
 
 ```bash
 # Download docker-compose.prod.yml
-curl -OL https://raw.githubusercontent.com/ZimengXiong/ExcaliDash/main/docker-compose.prod.yml
+curl -OL https://raw.githubusercontent.com/ZimengXiong/AnyDash/main/docker-compose.prod.yml
 
 # Pull images
 docker compose -f docker-compose.prod.yml pull
@@ -162,10 +162,10 @@ By default, the provided Compose files set `TRUST_PROXY=false` for safer setup. 
 
 ```bash
 # Clone the repository (recommended)
-git clone git@github.com:ZimengXiong/ExcaliDash.git
+git clone git@github.com:ZimengXiong/AnyDash.git
 
 # or, clone with HTTPS
-# git clone https://github.com/ZimengXiong/ExcaliDash.git
+# git clone https://github.com/ZimengXiong/AnyDash.git
 
 docker compose build
 docker compose up -d
@@ -180,11 +180,11 @@ docker compose up -d
 <details>
 <summary>Reverse Proxy / Traefik</summary>
 
-When running ExcaliDash behind Traefik, Nginx, or another reverse proxy, configure both containers so that API + WebSocket calls resolve correctly:
+When running AnyDash behind Traefik, Nginx, or another reverse proxy, configure both containers so that API + WebSocket calls resolve correctly:
 
 | Variable                 | Purpose                                                                                                                                                                   |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `FRONTEND_URL`           | Backend allowed origin(s). Must match the public URL users access (for example `https://excalidash.example.com`). Supports comma-separated values for multiple addresses. |
+| `FRONTEND_URL`           | Backend allowed origin(s). Must match the public URL users access (for example `https://anydash.example.com`). Supports comma-separated values for multiple addresses. |
 | `TRUST_PROXY`            | Set to `1` when traffic passes through one trusted reverse-proxy hop (for example frontend nginx -> backend) and headers are sanitized.                                   |
 | `BACKEND_URL`            | Frontend container-to-backend target used by Nginx. Override when backend host differs from default service DNS/host.                                                     |
 | `ENFORCE_HTTPS_REDIRECT` | When `FRONTEND_URL` uses `https://`, the backend automatically redirects plain-HTTP requests to HTTPS. Set to `false` if your outer gateway already enforces HTTPS and you want to disable the built-in redirect (avoids redirect loops when `X-Forwarded-Proto` is not forwarded). Default: `true`. |
@@ -194,7 +194,7 @@ When running ExcaliDash behind Traefik, Nginx, or another reverse proxy, configu
 backend:
   environment:
     # Single URL
-    - FRONTEND_URL=https://excalidash.example.com
+    - FRONTEND_URL=https://anydash.example.com
     # Trust exactly one reverse-proxy hop
     - TRUST_PROXY=1
     # Or multiple URLs (comma-separated) for local + network access
@@ -207,7 +207,7 @@ frontend:
     # For standard Docker Compose (default)
     # - BACKEND_URL=backend:8000
     # For Kubernetes, use the service DNS name:
-    - BACKEND_URL=excalidash-backend.default.svc.cluster.local:8000
+    - BACKEND_URL=anydash-backend.default.svc.cluster.local:8000
 ```
 
 </details>
@@ -215,7 +215,7 @@ frontend:
 <details>
 <summary>Scaling / HA (Current Limitations)</summary>
 
-ExcaliDash currently supports running **one backend instance**.
+AnyDash currently supports running **one backend instance**.
 
 Why:
 
@@ -236,7 +236,7 @@ Recommended deployment pattern:
 <details>
 <summary>Auth, Onboarding, and First Admin Setup</summary>
 
-ExcaliDash supports local login and OIDC, and includes a one-time first-admin bootstrap key to protect initial setup/migration flows.
+AnyDash supports local login and OIDC, and includes a one-time first-admin bootstrap key to protect initial setup/migration flows.
 
 Auth modes:
 
@@ -273,7 +273,7 @@ backend:
   environment:
     - AUTH_MODE=oidc_enforced
     - OIDC_PROVIDER_NAME=Authentik
-    - OIDC_ISSUER_URL=https://auth.example.com/application/o/excalidash/
+    - OIDC_ISSUER_URL=https://auth.example.com/application/o/anydash/
     - OIDC_CLIENT_ID=your-client-id
     # Optional for public clients; required for confidential clients
     # - OIDC_CLIENT_SECRET=your-client-secret
@@ -281,7 +281,7 @@ backend:
     # - OIDC_TOKEN_ENDPOINT_AUTH_METHOD=client_secret_post
     # Optional override when your IdP client is configured for a non-default ID token alg
     # - OIDC_ID_TOKEN_SIGNED_RESPONSE_ALG=HS256
-    - OIDC_REDIRECT_URI=https://excalidash.example.com/api/auth/oidc/callback
+    - OIDC_REDIRECT_URI=https://anydash.example.com/api/auth/oidc/callback
     - OIDC_SCOPES=openid profile email
 ```
 
@@ -305,11 +305,11 @@ Notes:
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | OIDC-only (`oidc_enforced`) | You typically do not use local bootstrap admin registration; first admin can be created through your IdP depending on config. |
 | Reverse proxy               | Set `FRONTEND_URL` and `TRUST_PROXY` correctly or auth + websockets may fail.                                                 |
-| ID token algorithm          | ExcaliDash defaults to `RS256`. If your IdP client is explicitly configured for another signed ID-token algorithm such as `HS256`, set `OIDC_ID_TOKEN_SIGNED_RESPONSE_ALG` to match that exact client setting. `none` is not allowed, and `HS*` requires `OIDC_CLIENT_SECRET`. |
+| ID token algorithm          | AnyDash defaults to `RS256`. If your IdP client is explicitly configured for another signed ID-token algorithm such as `HS256`, set `OIDC_ID_TOKEN_SIGNED_RESPONSE_ALG` to match that exact client setting. `none` is not allowed, and `HS*` requires `OIDC_CLIENT_SECRET`. |
 | Keycloak issuer format      | Use realm issuer URL: `https://<keycloak-host>/realms/<realm>`.                                                               |
 | Authentik issuer format     | Use provider issuer URL: `https://<authentik-host>/application/o/<provider-slug>/`.                                           |
 | Authentik `email_verified`  | If Authentik does not emit `email_verified=true`, either add the scope mapping or set `OIDC_REQUIRE_EMAIL_VERIFIED=false`.   |
-| Redirect URI                | Must be exact callback: `https://<excalidash-host>/api/auth/oidc/callback`.                                                   |
+| Redirect URI                | Must be exact callback: `https://<anydash-host>/api/auth/oidc/callback`.                                                   |
 
 </details>
 
@@ -321,7 +321,7 @@ Notes:
 This repo includes a Keycloak container + realm seed for local OIDC testing:
 
 - Compose file: `docker-compose.oidc.yml`
-- Realm import: `oidc/keycloak/realm-excalidash.json`
+- Realm import: `oidc/keycloak/realm-anydash.json`
 
 The realm seed intentionally contains **no users and no passwords**. You create a realm user and set a password via the Keycloak admin UI.
 
@@ -337,17 +337,17 @@ docker compose -f docker-compose.oidc.yml up -d
 Open Keycloak admin UI (realm/user setup):
 
 - `http://localhost:8080/admin`
-- Switch realm to `excalidash`
+- Switch realm to `anydash`
 - Create a user and set a password in `Credentials`
 
-Configure ExcaliDash backend for hybrid OIDC:
+Configure AnyDash backend for hybrid OIDC:
 
 ```bash
 cd backend
 cp .env.oidc.example .env
 # Ensure OIDC_REDIRECT_URI matches where your frontend is running:
 # - http://localhost:6767/api/auth/oidc/callback (repo frontend dev default)
-# - https://excalidash.example.com/api/auth/oidc/callback (production)
+# - https://anydash.example.com/api/auth/oidc/callback (production)
 ```
 
 Stop/clean up:
@@ -386,10 +386,10 @@ For contributor workflow, `make dev` starts the app in local single-user mode so
 
 ```bash
 # Clone the repository (recommended)
-git clone git@github.com:ZimengXiong/ExcaliDash.git
+git clone git@github.com:ZimengXiong/AnyDash.git
 
 # or, clone with HTTPS
-# git clone https://github.com/ZimengXiong/ExcaliDash.git
+# git clone https://github.com/ZimengXiong/AnyDash.git
 ```
 
 </details>
@@ -400,7 +400,7 @@ git clone git@github.com:ZimengXiong/ExcaliDash.git
 ## Frontend
 
 ```bash
-cd ExcaliDash/frontend
+cd AnyDash/frontend
 npm install
 
 # Copy environment file and customize if needed
@@ -417,7 +417,7 @@ npm run dev
 ## Backend
 
 ```bash
-cd ExcaliDash/backend
+cd AnyDash/backend
 npm install
 
 # Copy environment file and customize if needed
@@ -440,7 +440,7 @@ npm run dev
 To simulate first-run authentication choice flows in local development:
 
 ```bash
-cd ExcaliDash/backend
+cd AnyDash/backend
 
 # Preview what would change (no data modifications)
 npm run dev:simulate-auth-onboarding:dry-run
@@ -490,7 +490,7 @@ Common flags:
 </details>
 
 # Credits
-If you find ExcaliDash useful, please consider [sponsoring](https://github.com/sponsors/ZimengXiong)
+If you find AnyDash useful, please consider [sponsoring](https://github.com/sponsors/ZimengXiong)
 - Example designs from:
   - https://github.com/Prakash-sa/system-design-ultimatum/tree/main
   - https://github.com/kitsteam/excalidraw-examples/tree/main

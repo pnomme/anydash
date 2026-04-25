@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * CLI admin password recovery for ExcaliDash.
+ * CLI admin password recovery for AnyDash.
  *
  * Examples:
  *   node scripts/admin-recover.cjs --identifier admin@example.com --password "NewStrongPassword!"

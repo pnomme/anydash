@@ -1,14 +1,16 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT_DIR"
 
-DOCKER_USERNAME="zimengxiong"
-IMAGE_NAME="excalidash"
+DOCKER_USERNAME="${DOCKER_USERNAME:-anycloudas}"
+IMAGE_NAME="${IMAGE_NAME:-anydash}"
+BUILDER_NAME="${BUILDER_NAME:-anydash-builder}"
+PLATFORMS="${PLATFORMS:-linux/amd64,linux/arm64}"
 BASE_VERSION=$(node -e "try { console.log(require('fs').readFileSync('VERSION', 'utf8').trim()) } catch { console.log('0.0.0') }")
-CUSTOM_NAME=$1
+CUSTOM_NAME="${1:-}"
 VERSION="${BASE_VERSION}-dev-${CUSTOM_NAME}"
 
 if [ -z "$CUSTOM_NAME" ]; then
@@ -16,30 +18,38 @@ if [ -z "$CUSTOM_NAME" ]; then
   echo "Usage: $0 <custom-name>"
   exit 1
 fi
+if ! echo "$CUSTOM_NAME" | grep -Eq '^[a-zA-Z0-9][a-zA-Z0-9_.-]*$'; then
+  echo "ERROR: Custom name must be a valid Docker tag suffix."
+  echo "Use letters, numbers, dots, underscores, or dashes."
+  exit 1
+fi
 
-echo "ExcaliDash Custom Dev Release"
-echo "Tag:   $VERSION"
+echo "AnyDash Custom Dev Release"
+echo "Docker Hub namespace: $DOCKER_USERNAME"
+echo "Image base name:      $IMAGE_NAME"
+echo "Version tag:          $VERSION"
+echo "Platforms:            $PLATFORMS"
 
 echo "Checking Docker Hub authentication..."
 if ! docker info | grep -q "Username: $DOCKER_USERNAME"; then
   echo "Not logged in. Please login to Docker Hub:"
-  docker login
+  docker login -u "$DOCKER_USERNAME"
 else
   echo "Already logged in as $DOCKER_USERNAME."
 fi
 
 echo "Setting up buildx builder..."
-if ! docker buildx inspect excalidash-builder > /dev/null 2>&1; then
+if ! docker buildx inspect "$BUILDER_NAME" > /dev/null 2>&1; then
   echo "Creating new buildx builder..."
-  docker buildx create --name excalidash-builder --use --bootstrap
+  docker buildx create --name "$BUILDER_NAME" --use --bootstrap
 else
   echo "Using existing buildx builder."
-  docker buildx use excalidash-builder
+  docker buildx use "$BUILDER_NAME"
 fi
 
 echo "Building and pushing backend image..."
 docker buildx build \
-  --platform linux/amd64,linux/arm64 \
+  --platform "$PLATFORMS" \
   --tag "$DOCKER_USERNAME/$IMAGE_NAME-backend:$VERSION" \
   --file backend/Dockerfile \
   --push \
@@ -49,7 +59,7 @@ echo "Backend image pushed successfully."
 
 echo "Building and pushing frontend image..."
 docker buildx build \
-  --platform linux/amd64,linux/arm64 \
+  --platform "$PLATFORMS" \
   --tag "$DOCKER_USERNAME/$IMAGE_NAME-frontend:$VERSION" \
   --build-arg VITE_APP_VERSION="$VERSION" \
   --build-arg VITE_APP_BUILD_LABEL="development" \
@@ -58,4 +68,6 @@ docker buildx build \
   .
 
 echo "Frontend image pushed successfully."
-echo "Custom dev images published."
+echo "Published:"
+echo "  $DOCKER_USERNAME/$IMAGE_NAME-backend:$VERSION"
+echo "  $DOCKER_USERNAME/$IMAGE_NAME-frontend:$VERSION"

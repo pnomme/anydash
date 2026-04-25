@@ -122,7 +122,7 @@ export const Layout: React.FC<LayoutProps> = ({
 
               <div className="ml-auto flex items-center gap-2">
                 <Logo className="w-8 h-8" />
-                <span className="text-xl text-slate-900 dark:text-white mt-1" style={{ fontFamily: 'Excalifont' }}>ExcaliDash</span>
+                <span className="text-xl text-slate-900 dark:text-white mt-1" style={{ fontFamily: 'Excalifont' }}>AnyDash</span>
                 <span className="text-[10px] font-bold text-red-500 mt-2" style={{ fontFamily: 'sans-serif' }}>BETA</span>
               </div>
             </div>

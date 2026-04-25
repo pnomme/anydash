@@ -111,7 +111,7 @@ export const fetchLatest = async (
 
   const headers: Record<string, string> = {
     Accept: "application/vnd.github+json",
-    "User-Agent": "ExcaliDash-UpdateCheck",
+    "User-Agent": "AnyDash-UpdateCheck",
   };
   const token = envGithubToken();
   if (token) {
@@ -121,7 +121,7 @@ export const fetchLatest = async (
     headers["If-None-Match"] = cache.etag;
   }
 
-  const url = "https://api.github.com/repos/ZimengXiong/ExcaliDash/releases?per_page=30";
+  const url = "https://api.github.com/repos/ZimengXiong/AnyDash/releases?per_page=30";
   const resp = await fetch(url, { headers });
 
   if (resp.status === 304 && cache && cache.channel === channel) {

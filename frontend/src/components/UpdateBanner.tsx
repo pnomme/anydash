@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { BellOff, ExternalLink, RefreshCw, XCircle } from "lucide-react";
 import * as api from "../api";
 
-const CHANNEL_KEY = "excalidash-update-channel";
-const DISMISSED_VERSION_KEY = "excalidash-update-ignored-version";
-const LAST_CHECK_KEY = "excalidash-update-last-check";
-const UPDATE_INFO_KEY = "excalidash-update-info";
-const CLOSED_VERSION_KEY = "excalidash-update-banner-closed-version";
+const CHANNEL_KEY = "anydash-update-channel";
+const DISMISSED_VERSION_KEY = "anydash-update-ignored-version";
+const LAST_CHECK_KEY = "anydash-update-last-check";
+const UPDATE_INFO_KEY = "anydash-update-info";
+const CLOSED_VERSION_KEY = "anydash-update-banner-closed-version";
 const CHECK_INTERVAL_MS = 24 * 60 * 60 * 1000;
 
 const safeGetItem = (key: string): string | null => {

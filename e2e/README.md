@@ -1,6 +1,6 @@
-# ExcaliDash E2E Tests
+# AnyDash E2E Tests
 
-Browser-based end-to-end tests for ExcaliDash using Playwright.
+Browser-based end-to-end tests for AnyDash using Playwright.
 
 ## Prerequisites
 

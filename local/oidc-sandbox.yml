@@ -58,9 +58,9 @@ services:
       - JWT_SECRET=oidc-auth-jwt-secret-32-char-min-0002
       - CSRF_SECRET=oidc-auth-csrf-secret-32-char-min-0002
       - OIDC_PROVIDER_NAME=Keycloak
-      - OIDC_ISSUER_URL=http://host.docker.internal:18081/realms/excalidash
-      - OIDC_CLIENT_ID=excalidash
-      - OIDC_CLIENT_SECRET=excalidash-secret
+      - OIDC_ISSUER_URL=http://host.docker.internal:18081/realms/anydash
+      - OIDC_CLIENT_ID=anydash
+      - OIDC_CLIENT_SECRET=anydash-secret
       - OIDC_REDIRECT_URI=http://localhost:1001/api/auth/oidc/callback
       - OIDC_ID_TOKEN_SIGNED_RESPONSE_ALG=HS256
       - OIDC_REQUIRE_EMAIL_VERIFIED=false

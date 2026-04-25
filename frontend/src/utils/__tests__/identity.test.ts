@@ -40,7 +40,7 @@ describe("getUserIdentity", () => {
 
   it("normalizes stored initials to match the stored name", () => {
     localStorage.setItem(
-      "excalidash-user-id",
+      "anydash-user-id",
       JSON.stringify({
         id: "device-1",
         name: "Scourge",
@@ -59,13 +59,13 @@ describe("getUserIdentity", () => {
   });
 
   it("is deterministic from the browser fingerprint", () => {
-    localStorage.setItem("excalidash-device-id", "device-abc");
+    localStorage.setItem("anydash-device-id", "device-abc");
 
     const first = getUserIdentity();
     expect(first.initials).toBe(getInitialsFromName(first.name));
 
     // Clearing only the user-id should not change the computed identity.
-    localStorage.removeItem("excalidash-user-id");
+    localStorage.removeItem("anydash-user-id");
     const second = getUserIdentity();
 
     expect(second).toEqual(first);

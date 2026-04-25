@@ -184,7 +184,7 @@ export const Editor: React.FC = () => {
   const location = useLocation();
   const { theme } = useTheme();
   const { user } = useAuth();
-  const autoHideStorageKey = id ? `excalidash:editor:${id}:autoHideEnabled` : null;
+  const autoHideStorageKey = id ? `anydash:editor:${id}:autoHideEnabled` : null;
   const getStoredAutoHideEnabled = useCallback((): boolean => {
     if (!autoHideStorageKey) return true;
     try {
@@ -386,7 +386,7 @@ export const Editor: React.FC = () => {
       lastSyncedFilesRef.current = nextFiles;
 
       if (import.meta.env.DEV) {
-        const dbg = ((window as any).__EXCALIDASH_E2E_DEBUG__ ||= {
+        const dbg = ((window as any).__ANYDASH_E2E_DEBUG__ ||= {
           fileEmits: 0,
           lastFilesDeltaIds: [] as string[],
         });
@@ -480,14 +480,14 @@ export const Editor: React.FC = () => {
     socketRef.current = socket;
 
     if (import.meta.env.DEV) {
-      (window as any).__EXCALIDASH_SOCKET_STATUS__ = {
+      (window as any).__ANYDASH_SOCKET_STATUS__ = {
         connected: socket.connected,
       };
       socket.on("connect", () => {
-        (window as any).__EXCALIDASH_SOCKET_STATUS__ = { connected: true };
+        (window as any).__ANYDASH_SOCKET_STATUS__ = { connected: true };
       });
       socket.on("disconnect", () => {
-        (window as any).__EXCALIDASH_SOCKET_STATUS__ = { connected: false };
+        (window as any).__ANYDASH_SOCKET_STATUS__ = { connected: false };
       });
     }
 
@@ -765,7 +765,7 @@ export const Editor: React.FC = () => {
   const setExcalidrawAPI = useCallback((api: any) => {
     excalidrawAPI.current = api;
     if (import.meta.env.DEV) {
-      (window as any).__EXCALIDASH_EXCALIDRAW_API__ = api;
+      (window as any).__ANYDASH_EXCALIDRAW_API__ = api;
     }
 
     if (api && typeof api.addFiles === "function" && !patchedAddFilesApisRef.current.has(api as object)) {

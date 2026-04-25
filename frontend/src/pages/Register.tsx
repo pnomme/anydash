@@ -140,7 +140,7 @@ export const Register: React.FC = () => {
             {bootstrapRequired ? (
               <span>
                 Set up your first admin account to finish enabling multi-user access for this
-                ExcaliDash instance.
+                AnyDash instance.
               </span>
             ) : (
               <>

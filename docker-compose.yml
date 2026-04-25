@@ -1,9 +1,11 @@
+name: anydash
+
 services:
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: excalidash-backend
+    container_name: anydash-backend
     environment:
       - DATABASE_URL=file:/app/prisma/dev.db
       - PORT=8000
@@ -18,14 +20,14 @@ services:
       - CSRF_SECRET=${CSRF_SECRET}
       # Optional OIDC settings (required for AUTH_MODE=hybrid or oidc_enforced)
       # - OIDC_PROVIDER_NAME=Authentik
-      # - OIDC_ISSUER_URL=https://auth.example.com/application/o/excalidash/
+      # - OIDC_ISSUER_URL=https://auth.example.com/application/o/anydash/
       # - OIDC_CLIENT_ID=your-client-id
       # - OIDC_CLIENT_SECRET=your-client-secret
-      # - OIDC_REDIRECT_URI=https://excalidash.example.com/api/auth/oidc/callback
+      # - OIDC_REDIRECT_URI=https://anydash.example.com/api/auth/oidc/callback
     volumes:
       - backend-data:/app/prisma
     networks:
-      - excalidash-network
+      - anydash-network
     restart: unless-stopped
     healthcheck:
       # Use IPv4 loopback explicitly to avoid IPv6 localhost resolution issues.
@@ -44,17 +46,17 @@ services:
     build:
       context: .
       dockerfile: frontend/Dockerfile
-    container_name: excalidash-frontend
+    container_name: anydash-frontend
     ports:
       - "6767:80"
     environment:
       # Backend URL for nginx proxy (host:port format, no protocol)
-      # Override for reverse proxy setups (e.g., excalidash-backend.svc.cluster.local:8000)
+      # Override for reverse proxy setups (e.g., anydash-backend.svc.cluster.local:8000)
       - BACKEND_URL=backend:8000
     depends_on:
       - backend
     networks:
-      - excalidash-network
+      - anydash-network
     restart: unless-stopped
     healthcheck:
       # Use IPv4 loopback explicitly to avoid IPv6 localhost resolution issues.
@@ -72,7 +74,7 @@ services:
       retries: 3
 
 networks:
-  excalidash-network:
+  anydash-network:
     driver: bridge
 
 volumes:

@@ -14,7 +14,7 @@ type LegacyDbOptions = {
   includeTrashDrawing: boolean;
 };
 
-const createTempDir = () => fs.mkdtempSync(path.join(os.tmpdir(), "excalidash-legacy-"));
+const createTempDir = () => fs.mkdtempSync(path.join(os.tmpdir(), "anydash-legacy-"));
 
 const openWritableDb = (filePath: string): any => {
   try {
@@ -158,13 +158,13 @@ const createLegacySqliteDb = (opts: LegacyDbOptions): string => {
   return filePath;
 };
 
-const createExcalidashArchiveWithDuplicateDrawingIds = async (): Promise<string> => {
+const createAnyDashArchiveWithDuplicateDrawingIds = async (): Promise<string> => {
   const dir = createTempDir();
-  const filePath = path.join(dir, "duplicate-drawing-ids.excalidash");
+  const filePath = path.join(dir, "duplicate-drawing-ids.anydash");
   const zip = new JSZip();
 
   const manifest = {
-    format: "excalidash",
+    format: "anydash",
     formatVersion: 1,
     exportedAt: new Date().toISOString(),
     unorganizedFolder: "Unorganized",
@@ -185,7 +185,7 @@ const createExcalidashArchiveWithDuplicateDrawingIds = async (): Promise<string>
     ],
   };
 
-  zip.file("excalidash.manifest.json", JSON.stringify(manifest));
+  zip.file("anydash.manifest.json", JSON.stringify(manifest));
   zip.file(
     "Unorganized/drawing-1.excalidraw",
     JSON.stringify({ type: "excalidraw", version: 2, source: "test", elements: [], appState: {}, files: {} })
@@ -397,10 +397,10 @@ describe("Import compatibility (legacy exports)", () => {
     expect(res.body.error).toBe("Invalid legacy DB");
   });
 
-  it("rejects .excalidash verify when manifest has duplicate drawing IDs", async () => {
-    const archive = await createExcalidashArchiveWithDuplicateDrawingIds();
+  it("rejects .anydash verify when manifest has duplicate drawing IDs", async () => {
+    const archive = await createAnyDashArchiveWithDuplicateDrawingIds();
     const res = await agent
-      .post("/import/excalidash/verify")
+      .post("/import/anydash/verify")
       .set("User-Agent", userAgent)
       .set(csrfHeaderName, csrfToken)
       .attach("archive", archive);
@@ -409,10 +409,10 @@ describe("Import compatibility (legacy exports)", () => {
     expect(String(res.body.message || "")).toContain("Duplicate drawing id");
   });
 
-  it("rejects .excalidash import when manifest has duplicate drawing IDs", async () => {
-    const archive = await createExcalidashArchiveWithDuplicateDrawingIds();
+  it("rejects .anydash import when manifest has duplicate drawing IDs", async () => {
+    const archive = await createAnyDashArchiveWithDuplicateDrawingIds();
     const res = await agent
-      .post("/import/excalidash")
+      .post("/import/anydash")
       .set("User-Agent", userAgent)
       .set(csrfHeaderName, csrfToken)
       .attach("archive", archive);

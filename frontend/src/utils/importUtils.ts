@@ -154,13 +154,13 @@ const importLegacyZip = async (
   const zip = await JSZip.loadAsync(await file.arrayBuffer());
 
   const entries = Object.values(zip.files).filter((e: any) => !e.dir);
-  const hasExcalidashManifest = entries.some((e: any) => e.name === "excalidash.manifest.json");
-  if (hasExcalidashManifest) {
+  const hasAnyDashManifest = entries.some((e: any) => e.name === "anydash.manifest.json");
+  if (hasAnyDashManifest) {
     return {
       success: 0,
       failed: 1,
       errors: [
-        `${file.name}: This looks like an ExcaliDash backup (.excalidash). Use "Import Backup" instead of Legacy Import.`,
+        `${file.name}: This looks like an AnyDash backup (.anydash). Use "Import Backup" instead of Legacy Import.`,
       ],
     };
   }
@@ -374,7 +374,7 @@ export const importDrawings = async (
 /**
  * Legacy import helper.
  * - Supports individual `.excalidraw` / Excalidraw `.json` drawings (same as importDrawings)
- * - Supports legacy ExcaliDash export `.json` with `{ drawings: [...] }`
+ * - Supports legacy AnyDash export `.json` with `{ drawings: [...] }`
  */
 export const importLegacyFiles = async (
   files: File[],
